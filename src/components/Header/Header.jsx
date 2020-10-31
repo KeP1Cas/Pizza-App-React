@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
 
-import Logotype from '../../assets/img/pizza-logo.svg'
+import Logotype from "../../assets/img/pizza-logo.svg";
 import Button from "./Button";
 const Header = () => {
-    return (
-        <div className="header">
-        <div className="container">
+  return (
+    <div className="header">
+      <div className="container">
+        <Link to="/">
           <div className="header__logo">
             <img width="38" src={Logotype} alt="Pizza logo" />
             <div>
@@ -13,10 +15,13 @@ const Header = () => {
               <p>самая вкусная пицца во вселенной</p>
             </div>
           </div>
-          <Button/>
-        </div>
+        </Link>
+        <Link to="/cart">
+          <Button />
+        </Link>
       </div>
-    )
-}
+    </div>
+  );
+};
 
-export default Header
+export default Header;
