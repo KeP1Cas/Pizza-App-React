@@ -4,8 +4,6 @@ import Categorys from "../components/Category/Categorys";
 import SortPopup from "../components/Category/SortPopup";
 
 const Home = ({ items }) => {
-  
-
   return (
     <div className="container">
       <div className="content__top">
@@ -13,16 +11,19 @@ const Home = ({ items }) => {
           onClickItem={(name) => console.log(name)}
           items={["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]}
         />
-        <SortPopup items={["популярности", "цене", "алфавиту"]} />
+        <SortPopup
+          items={[
+            { name: "популярности", type: "popular" },
+            { name: "цене", type: "price" },
+            { name: "алфавиту", type: "alphabet" },
+          ]}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {
-          items.map(obj => (
-            <PizzaBlock key={obj.id} {...obj}/>
-          ))
-        }
-        
+        {items.map((obj) => (
+          <PizzaBlock key={obj.id} {...obj} />
+        ))}
       </div>
     </div>
   );
