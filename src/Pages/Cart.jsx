@@ -3,10 +3,10 @@ import emptyCart from '../assets/img/empty-cart.png';
 
 const Cart = () => {
   return (
-    <div class="wrapper">
-      <div class="content">
-        <div class="container container--cart">
-          <div class="cart cart--empty">
+    <div className="wrapper">
+      <div className="content">
+        <div className="container container--cart">
+          <div className="cart cart--empty">
             <h2>Корзина пустая <icon>😕</icon></h2>
             <p>
               Вероятней всего, вы не заказывали ещё пиццу.<br />
