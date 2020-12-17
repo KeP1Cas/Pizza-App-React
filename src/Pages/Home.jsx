@@ -5,6 +5,7 @@ import SortPopup from "../components/Category/SortPopup";
 import LoadingPizzaBlock from "../components/Block/LoadingPizzaBlock";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPizzas } from "../redux/actions/pizzas";
+import { addPizzaToCart } from "../redux/actions/cart";
 import { setCategory, setSortBy } from "../redux/actions/filters";
 
 const categoryNames = [
@@ -16,14 +17,15 @@ const categoryNames = [
 ];
 
 const sortPopupNames = [
-  { name: "популярности", type: "popular", order: 'desc' },
-  { name: "цене", type: "price", order: 'desc' },
-  { name: "алфавиту", type: "name", order: 'asc' },
+  { name: "популярности", type: "popular", order: "desc" },
+  { name: "цене", type: "price", order: "desc" },
+  { name: "алфавиту", type: "name", order: "asc" },
 ];
 
 const Home = () => {
   const dispatch = useDispatch();
   const items = useSelector(({ pizzas }) => pizzas.items);
+  const cartItems = useSelector(({ cart }) => cart.items);
   const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
   const { category, sortBy } = useSelector(({ filters }) => filters);
 
@@ -39,6 +41,13 @@ const Home = () => {
     dispatch(setSortBy(type));
   }, []);
 
+  const handleAddPizzaToCart = (obj) => {
+    dispatch({
+      type: 'ADD_PIZZA_CART',
+      payload: obj
+    })
+  }
+
   return (
     <div className="container">
       <div className="content__top">
@@ -47,14 +56,24 @@ const Home = () => {
           onClickCategory={onSelectCategory}
           items={categoryNames}
         />
-        <SortPopup activeSortType={sortBy.type} items={sortPopupNames} onClickSortType={onSelectSortType} />
+        <SortPopup
+          activeSortType={sortBy.type}
+          items={sortPopupNames}
+          onClickSortType={onSelectSortType}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isLoaded
           ? items &&
             items.map((obj) => (
-              <PizzaBlock key={obj.id} isLoading={true} {...obj} />
+              <PizzaBlock
+                onClickAddPizza={handleAddPizzaToCart}
+                addedCount={cartItems[obj.id] && cartItems[obj.id].length}
+                key={obj.id}
+                isLoading={true}
+                {...obj}
+              />
             ))
           : Array(12)
               .fill(0)
